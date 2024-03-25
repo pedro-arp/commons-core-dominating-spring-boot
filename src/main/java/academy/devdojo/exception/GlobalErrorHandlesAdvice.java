@@ -5,8 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.sql.SQLIntegrityConstraintViolationException;
-
 @ControllerAdvice
 public class GlobalErrorHandlesAdvice {
     @ExceptionHandler(NotFoundException.class)
@@ -18,12 +16,4 @@ public class GlobalErrorHandlesAdvice {
 
     }
 
-    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
-    public ResponseEntity<DefaultErrorMessage> handleSQLIntegrityConstraintViolationException() {
-
-        var errorResponse = new DefaultErrorMessage(HttpStatus.BAD_REQUEST.value(), "Integrity exception, one of the fields should be unique");
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
-
-    }
 }
